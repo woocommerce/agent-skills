@@ -1,0 +1,22 @@
+{
+  "name": "Register the first read ability in a WooCommerce extension",
+  "skills": ["abilities-api-implement"],
+  "query": "I have a WooCommerce extension and an audit doc that proposes a read ability `myplugin/get-something`. Walk me through registering it end-to-end on the WC 10.9 Abilities API surface — Domain class + registrar wiring + tests + PR template.",
+  "expected_behavior": [
+    "Step 1: Confirm the audit doc exists and validate it via the audit-precondition reference before generating any code",
+    "Step 2: Confirm the worktree is a WooCommerce extension (composer dep on woocommerce/woocommerce, or `WC requires at least` header, or path heuristics)",
+    "Step 3: Scaffold the Abilities_Registrar coordinator with feature-flag gate, WC 10.9 loader gate, empty ABILITY_CLASSES const, and CATEGORY_SLUG = 'woocommerce'",
+    "Step 4: Generate a Domain class under src/Internal/Abilities/Domain/ implementing AbilityDefinition (get_name, get_registration_args, execute) that consumes a shared service or REST delegate",
+    "Step 5: Wire the Domain class into ABILITY_CLASSES so the woocommerce_ability_definition_classes filter picks it up",
+    "Step 6: Write Phase-I and Phase-II tests asserting the six public-contract dimensions (permissions, inputs, annotations, output curation, privacy, execution)",
+    "Step 7: Generate a PR description matching pr-template.md including seeded-data proof and the local-only-artifact rule"
+  ],
+  "success_criteria": [
+    "Agent does not write production code before the audit doc + use-case-fit check passes",
+    "Domain class names match the convention from registrar-template.md",
+    "Tests assert all three annotations (readonly, destructive, idempotent) explicitly",
+    "Feature flag is wired as rollout posture (default off), not as the structural gate",
+    "Structural gate is the class_exists() check on the WC 10.9 AbilitiesLoader, not the feature flag",
+    "Skill references upstream WordPress/agent-skills skills (wp-abilities-audit, wp-abilities-verify) rather than duplicating their teaching"
+  ]
+}

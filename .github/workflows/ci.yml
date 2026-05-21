@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: ["**"]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Run local eval harness
+        run: node eval/harness/run.mjs
+
+      - name: Build skillpacks (Codex + VS Code)
+        run: node shared/scripts/skillpack-build.mjs --clean --out=dist --targets=codex,vscode
+
+      - name: Install skillpacks (smoke)
+        run: |
+          rm -rf /tmp/skillpack-install-test
+          mkdir -p /tmp/skillpack-install-test
+          node shared/scripts/skillpack-install.mjs --from=dist --dest=/tmp/skillpack-install-test --targets=codex,vscode
+          test -f /tmp/skillpack-install-test/.codex/skills/abilities-api-implement/SKILL.md
+          test -f /tmp/skillpack-install-test/.github/skills/abilities-api-implement/SKILL.md
