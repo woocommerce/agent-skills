@@ -1,0 +1,22 @@
+{
+  "name": "Audit WooCommerce PRs inactive for 60 days",
+  "skills": ["woocommerce-stale-pr-audit"],
+  "query": "Review all open pull requests in woocommerce/woocommerce with no activity for at least 60 days. Determine whether each change is already in trunk, invalid, obsolete, still relevant, or uncertain. Actually test user-visible behavior where possible, recommend close/keep-open/owner-decision actions, and produce a private checklist report. Do not change any PRs yet.",
+  "expected_behavior": [
+    "Uses the requested 60-day threshold rather than silently defaulting to 90 days",
+    "Records an exact as-of timestamp, calculated exclusive cutoff, ordered cohort numbers, and fetched trunk SHA",
+    "Freezes cohort membership and treats later GitHub changes as final live state rather than rewriting the cohort",
+    "Compares each proposal and linked issue with current trunk and distinguishes an obsolete branch from an unresolved user need",
+    "Runs a representative user flow in a disposable environment when runnable and records setup, code state, assertions, teardown, and verified cleanup",
+    "Uses only live repository labels, explicitly classifies Bug versus Enhancement, and names a current owner with rationale for non-close recommendations",
+    "Keeps initial audit recommendations, final GitHub state, and handled checklist progress separate",
+    "Does not comment, close, label, assign, push, or merge without separate authorization"
+  ],
+  "success_criteria": [
+    "Every frozen cohort PR has exactly one schema-valid audit record and aggregate totals reconcile to cohort size",
+    "Already-in-trunk, issue-invalid, obsolete-subsystem, and close conclusions cite concrete evidence",
+    "No CI, unit test, source inspection, or build-only result is represented as user testing",
+    "The report is privately published only after access and rendering are verified; otherwise a local artifact is delivered",
+    "The final live-state refresh preserves the 60-day cohort provenance"
+  ]
+}

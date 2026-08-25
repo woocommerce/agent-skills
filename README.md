@@ -22,6 +22,7 @@ Agent Skills solve this by giving AI assistants **expert-level WooCommerce-exten
 | Skill | What it teaches |
 |-------|-----------------|
 | **abilities-api-implement** | End-to-end implementation playbook for registering [WordPress Abilities API](https://github.com/WordPress/abilities-api) capabilities in a WooCommerce extension. Covers audit-precondition, Domain class shape, loader-only registrar, paginated output envelope, in-plugin contract tests, and the WC 10.9 dependency boundary. |
+| **woocommerce-stale-pr-audit** | Evidence-backed review of a frozen WooCommerce pull-request cohort using a configurable inactivity threshold, current-trunk and linked-issue analysis, representative user-flow testing, proposed actions, and a private checklist report. |
 
 More skills will land as the repo grows.
 
